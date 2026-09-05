@@ -1,0 +1,43 @@
+[
+  {
+    "id": "CAT-FAMILY",
+    "key": "family",
+    "name": "Family (Households & Residential)",
+    "description": "Domestic dwellings, individual houses, apartments & housing societies",
+    "color": "#3B6E8F",
+    "subCategories": [
+      { "id": "SUB-FAM-01", "name": "Individual House / Villa", "estimatedVolumeKg": "10-25 kg/month" },
+      { "id": "SUB-FAM-02", "name": "Apartment Complex / Multi-story", "estimatedVolumeKg": "150-500 kg/month" },
+      { "id": "SUB-FAM-03", "name": "Gated Society / RWA", "estimatedVolumeKg": "200-800 kg/month" },
+      { "id": "SUB-FAM-04", "name": "Rental / Student Hostel", "estimatedVolumeKg": "50-120 kg/month" }
+    ]
+  },
+  {
+    "id": "CAT-BUSINESS",
+    "key": "business",
+    "name": "Business (Commercial Establishments)",
+    "description": "Retail shops, offices, hotels, hospitals, schools and commercial units",
+    "color": "#6B4F7A",
+    "subCategories": [
+      { "id": "SUB-BIZ-01", "name": "Hospital & Healthcare Clinic", "estimatedVolumeKg": "100-400 kg/month" },
+      { "id": "SUB-BIZ-02", "name": "Hotel, Restaurant & Cafe (HORECA)", "estimatedVolumeKg": "150-600 kg/month" },
+      { "id": "SUB-BIZ-03", "name": "Corporate Office / IT Park", "estimatedVolumeKg": "80-350 kg/month" },
+      { "id": "SUB-BIZ-04", "name": "Retail Shop / Departmental Store", "estimatedVolumeKg": "50-200 kg/month" },
+      { "id": "SUB-BIZ-05", "name": "School, College & Coaching Center", "estimatedVolumeKg": "100-500 kg/month" },
+      { "id": "SUB-BIZ-06", "name": "Wholesale Mandi & Grain Market", "estimatedVolumeKg": "300-1200 kg/month" }
+    ]
+  },
+  {
+    "id": "CAT-PUBLIC",
+    "key": "public",
+    "name": "Public (Public & Community Spaces)",
+    "description": "Community halls, parks, transit terminals and municipal spots",
+    "color": "#2F8F82",
+    "subCategories": [
+      { "id": "SUB-PUB-01", "name": "Community Hall & Park", "estimatedVolumeKg": "50-200 kg/month" },
+      { "id": "SUB-PUB-02", "name": "Religious Center & Temple/Mosque", "estimatedVolumeKg": "80-300 kg/month" },
+      { "id": "SUB-PUB-03", "name": "Government & Secretariat Complex", "estimatedVolumeKg": "200-800 kg/month" },
+      { "id": "SUB-PUB-04", "name": "Bus Terminal & Railway Station Hub", "estimatedVolumeKg": "200-800 kg/month" }
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+[
+  { "id": "TKT-2026-0001", "generatorId": "GEN-0001", "slotId": "SLOT-01", "status": "pending", "estimatedWeight": 20, "notes": "Doorstep collection. Ring doorbell on arrival.", "createdAt": "2026-09-04T09:00:00.000Z", "completedAt": null },
+  { "id": "TKT-2026-0002", "generatorId": "GEN-0003", "slotId": "SLOT-02", "status": "pending", "estimatedWeight": 65, "notes": "Corrugated boxes and metal sheets stored at back entrance.", "createdAt": "2026-09-04T09:05:00.000Z", "completedAt": null },
+  { "id": "TKT-2026-0003", "generatorId": "GEN-0002", "slotId": "SLOT-01", "status": "completed", "estimatedWeight": 15, "notes": "Newspaper raddi and plastic bottles.", "createdAt": "2026-09-03T08:30:00.000Z", "completedAt": "2026-09-03T09:10:00.000Z" }
+]

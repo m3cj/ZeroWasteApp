@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #E84118;
+  --color-primary-dark: #C8330D;
+  --color-primary-light: #F05D37;
+  --color-primary-soft: #FDF2EE;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #22282B;
+  background-color: #F8F6F0;
+  line-height: 1.5;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Explicit high-priority brand primary color utilities */
+.bg-primary {
+  background-color: #E84118 !important;
+}
+.bg-primary-dark {
+  background-color: #C8330D !important;
+}
+.bg-primary\/10 {
+  background-color: rgba(232, 65, 24, 0.1) !important;
+}
+.bg-primary\/20 {
+  background-color: rgba(232, 65, 24, 0.2) !important;
+}
+.text-primary {
+  color: #E84118 !important;
+}
+.border-primary {
+  border-color: #E84118 !important;
+}
+.border-primary\/20 {
+  border-color: rgba(232, 65, 24, 0.2) !important;
+}
+.hover\:bg-primary-dark:hover {
+  background-color: #C8330D !important;
+}
+.hover\:bg-primary:hover {
+  background-color: #E84118 !important;
+}
+.focus\:border-primary:focus {
+  border-color: #E84118 !important;
+}
+.focus\:ring-primary:focus {
+  --tw-ring-color: #E84118 !important;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: #F3EFE6;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 0%, #FAF8F2 0%, #F1ECE0 100%);
+  overflow-x: hidden;
+  color: #22282B;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+}
+
+button:active {
+  transform: scale(0.985);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+@layer components {
+  /* Ultra-polished mobile card */
+  .mobile-card {
+    @apply rounded-2xl border border-stone-200/90 bg-white p-4 shadow-card transition-all duration-200;
+  }
+
+  .mobile-card-interactive {
+    @apply rounded-2xl border border-stone-200/90 bg-white p-4 shadow-card transition-all duration-200 active:scale-[0.985] hover:border-route/40 hover:shadow-card-hover;
+  }
+
+  /* Verified anti-tamper badge */
+  .verified-badge {
+    @apply inline-flex items-center gap-1.5 rounded-lg border border-ledger/30 bg-ledger-soft px-2 py-0.5 font-mono text-[11px] font-semibold tracking-tight text-ledger;
+  }
+
+  /* Mobile input field */
+  .mobile-input {
+    @apply w-full rounded-xl border border-stone-300/80 bg-white px-3.5 py-3 text-sm text-ink placeholder:text-stone-400 shadow-sm transition outline-none focus:border-route focus:ring-2 focus:ring-route/20;
+  }
+
+  /* Form label */
+  .mobile-label {
+    @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted;
+  }
+
+  /* Primary action button */
+  .btn-primary {
+    @apply flex w-full items-center justify-center gap-2 rounded-xl bg-route px-5 py-3.5 text-sm font-semibold text-white shadow-md shadow-route/20 transition hover:bg-route-dark active:scale-[0.98] disabled:bg-stone-300 disabled:text-stone-500 disabled:shadow-none;
+  }
+
+  /* Ledger action button (green confirm) */
+  .btn-ledger {
+    @apply flex w-full items-center justify-center gap-2 rounded-xl bg-ledger px-5 py-3.5 text-sm font-semibold text-white shadow-md shadow-ledger/20 transition hover:bg-ledger-dark active:scale-[0.98] disabled:bg-stone-300 disabled:text-stone-500 disabled:shadow-none;
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    @apply flex w-full items-center justify-center gap-2 rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-ink-light shadow-sm transition hover:bg-stone-50 hover:text-ink active:scale-[0.98];
+  }
+
+  /* Sticky floating action container */
+  .sticky-bar {
+    @apply fixed inset-x-0 bottom-0 z-30 mx-auto flex max-w-md justify-center px-4 pb-4 pt-2;
+  }
+
+  .sticky-bar-inner {
+    @apply flex w-full items-center justify-between gap-3 rounded-2xl border border-stone-200/90 bg-white/95 p-3.5 shadow-floating backdrop-blur-md;
+  }
+
+  /* Ledger receipt card styling */
+  .receipt-card {
+    @apply relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-5 shadow-card;
+    background-image: radial-gradient(#E2DDD3 0.75px, transparent 0.75px);
+    background-size: 12px 12px;
+  }
+
+  .receipt-edge-top {
+    position: relative;
+  }
+  
+  .receipt-edge-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, transparent, transparent 4px, #1E7A46 4px, #1E7A46 8px);
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(44, 95, 116, 0.2);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(44, 95, 116, 0.4);
+}

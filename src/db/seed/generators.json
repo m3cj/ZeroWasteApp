@@ -1,0 +1,7 @@
+[
+  { "id": "GEN-0001", "name": "Ramesh Kumar Sharma", "phone": "9876543210", "address": "Flat 302, Shanti Vihar Appts, Doctors Colony, Kankarbagh Main Rd, Patna - 800020", "category": "family", "lifetimeKG": 186.5, "totalPayout": 2140, "outstandingDues": 0 },
+  { "id": "GEN-0002", "name": "Anjali Devi", "phone": "9876501234", "address": "Ward 45 Community Hall Rd, Patliputra Colony, Patna - 800013", "category": "family", "lifetimeKG": 64.0, "totalPayout": 810, "outstandingDues": 0 },
+  { "id": "GEN-0003", "name": "Shree Ganesh General Store", "phone": "9835012233", "address": "Shop 12, Boring Road Crossing, Patna - 800001", "category": "business", "lifetimeKG": 512.2, "totalPayout": 9840, "outstandingDues": 0 },
+  { "id": "GEN-0004", "name": "Patna Metro Cafe", "phone": "9835099887", "address": "Unit 4, Frazer Road Commercial Block, Patna - 800001", "category": "business", "lifetimeKG": 289.0, "totalPayout": 5210, "outstandingDues": 0 },
+  { "id": "GEN-0005", "name": "Kankarbagh Community Park", "phone": "9801144556", "address": "Central Park Gate 2, Kankarbagh, Patna - 800020", "category": "public", "lifetimeKG": 96.5, "totalPayout": 0, "outstandingDues": 0 }
+]

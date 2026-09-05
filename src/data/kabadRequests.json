@@ -1,0 +1,23 @@
+[
+  {
+    "id": "KAB-2026-0041",
+    "source": "citizen_portal",
+    "portalUrl": "niwasi.in/kabaddi",
+    "sellerType": "business",
+    "sellerName": "Gupta Medical & Hospital Store",
+    "contactPhone": "9876500041",
+    "address": "Opposite PMCH Gate 2, Ashok Rajpath, Patna - 800004",
+    "communityId": "COM-006",
+    "communityName": "Kadamkuan",
+    "items": [
+      { "name": "Cardboard / Cartoon Box", "weight": 28.0, "pricePerUnit": 8.5, "subtotal": 238.0 },
+      { "name": "HDPE Oil & Chemical Jars", "weight": 14.5, "pricePerUnit": 24.0, "subtotal": 348.0 }
+    ],
+    "grandTotal": 586.0,
+    "slotDate": "2026-08-28",
+    "slotTime": "Morning (8:00 AM - 11:00 AM)",
+    "entryPoint": "Backside Pharmacy Store Loading Bay",
+    "status": "Scheduled",
+    "createdAt": "2026-08-26T14:30:00Z"
+  }
+]

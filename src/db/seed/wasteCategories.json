@@ -1,0 +1,12 @@
+[
+  { "id": "WC-01", "groupId": "WG-01", "name": "Plastic", "icon": "Layers" },
+  { "id": "WC-02", "groupId": "WG-01", "name": "Paper", "icon": "FileText" },
+  { "id": "WC-03", "groupId": "WG-01", "name": "Leather & Sole", "icon": "Footprints" },
+  { "id": "WC-04", "groupId": "WG-01", "name": "Metal", "icon": "Hammer" },
+  { "id": "WC-05", "groupId": "WG-01", "name": "Cloth", "icon": "Shirt" },
+  { "id": "WC-06", "groupId": "WG-01", "name": "Wood", "icon": "Trees" },
+  { "id": "WC-07", "groupId": "WG-01", "name": "Glass", "icon": "Wine" },
+  { "id": "WC-08", "groupId": "WG-01", "name": "Hair", "icon": "Scissors" },
+  { "id": "WC-09", "groupId": "WG-02", "name": "Electronics", "icon": "Cpu" },
+  { "id": "WC-10", "groupId": "WG-03", "name": "Battery", "icon": "BatteryCharging" }
+]

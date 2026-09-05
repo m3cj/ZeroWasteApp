@@ -1,0 +1,11 @@
+[
+  { "id": "family", "name": "Family", "subCategory": "Individual House / Villa" },
+  { "id": "family-apt", "name": "Family", "subCategory": "Apartment Complex / Society" },
+  { "id": "family-gated", "name": "Family", "subCategory": "Gated Society / RWA" },
+  { "id": "business", "name": "Business", "subCategory": "Retail Shop / Store" },
+  { "id": "business-horeca", "name": "Business", "subCategory": "Hotel, Restaurant & Cafe" },
+  { "id": "business-office", "name": "Business", "subCategory": "Corporate Office / IT Park" },
+  { "id": "public", "name": "Public", "subCategory": "Community Hall & Park" },
+  { "id": "public-govt", "name": "Public", "subCategory": "Government & Municipal Building" },
+  { "id": "public-terminal", "name": "Public", "subCategory": "Transit Terminal & Station" }
+]

@@ -1,0 +1,104 @@
+{
+  "Dry Waste": {
+    "Plastic": [
+      "Thick Canister",
+      "Thin Canister",
+      "Water Bottle",
+      "Plastic Chairs",
+      "Ribbed Pipe",
+      "Colored Crystal",
+      "Clear Crystal",
+      "Rubber Gloves",
+      "Loose Plastic",
+      "Baled Plastic",
+      "Milk Pouch",
+      "Foam Sheet",
+      "Disposable Gloves",
+      "Glucose Pipe",
+      "Mixed Pellets",
+      "Colored Pellets",
+      "White Pellets",
+      "Hard Plastic",
+      "Plastic Card",
+      "Plastic Jar",
+      "Paint Brush",
+      "Snack Wrapper",
+      "LDPE Bottle",
+      "LDPE Pipe",
+      "Car Bumper",
+      "Thick Cable",
+      "Natural Plastic",
+      "PP Blend",
+      "Delivery Pipe",
+      "Foam Plate",
+      "Plastic Mix",
+      "Polythene Film",
+      "Black PP",
+      "Mixed PP",
+      "Colored PP",
+      "White PP",
+      "Drainage Pipe",
+      "Plastic Sheet"
+    ],
+    "Paper": [
+      "Paper Cutting",
+      "Fresh Newspaper",
+      "Carton Box",
+      "Notebooks",
+      "Office Paper",
+      "Cover Board",
+      "Magazine",
+      "Hardboard Scrap",
+      "Tetra Pak",
+      "Packaging Carton",
+      "Waste Paper"
+    ],
+    "Leather & Sole": [
+      "Bata Sole",
+      "Fabric Sole",
+      "Plain Sole",
+      "Scrap Tyre",
+      "Woven Sack"
+    ],
+    "Metal": [
+      "Aluminum",
+      "Copper",
+      "Iron",
+      "Steel",
+      "Tin",
+      "Brass"
+    ],
+    "Cloth": [
+      "Cotton Fabric",
+      "Polyester Fabric"
+    ],
+    "Wood": [
+      "Plywood",
+      "Raw Wood"
+    ],
+    "Glass": [
+      "Glass Bottle",
+      "Paper Cup"
+    ],
+    "Hair": [
+      "Hair Cut"
+    ]
+  },
+  "E-Waste": {
+    "Electronics": [
+      "Hard Disk",
+      "Heat Sink",
+      "Plastic Casing",
+      "Motherboard",
+      "Copper Wire",
+      "Mobile Phone"
+    ]
+  },
+  "Domestic Hazardous Waste": {
+    "Battery": [
+      "Battery"
+    ]
+  },
+  "Wet Waste": {},
+  "Sanitary & Medical Waste": {}
+}

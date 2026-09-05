@@ -1,0 +1,146 @@
+[
+  {
+    "id": "ITM-001",
+    "wasteGroup": "Dry Recyclables",
+    "wasteCategory": "Paper & Cardboard",
+    "name": "Cardboard / Cartoon Box",
+    "unit": "kg",
+    "pricePerUnit": 8.5
+  },
+  {
+    "id": "ITM-002",
+    "wasteGroup": "Dry Recyclables",
+    "wasteCategory": "Paper & Cardboard",
+    "name": "Old Newspapers (Raddi)",
+    "unit": "kg",
+    "pricePerUnit": 14.0
+  },
+  {
+    "id": "ITM-003",
+    "wasteGroup": "Dry Recyclables",
+    "wasteCategory": "Paper & Cardboard",
+    "name": "White Office & Notebook Paper",
+    "unit": "kg",
+    "pricePerUnit": 11.0
+  },
+  {
+    "id": "ITM-004",
+    "wasteGroup": "Dry Recyclables",
+    "wasteCategory": "Paper & Cardboard",
+    "name": "Mixed Magazines & Books",
+    "unit": "kg",
+    "pricePerUnit": 7.5
+  },
+  {
+    "id": "ITM-005",
+    "wasteGroup": "Metallic Waste",
+    "wasteCategory": "Ferrous Metals",
+    "name": "Iron & Steel Scrap (Loha)",
+    "unit": "kg",
+    "pricePerUnit": 32.0
+  },
+  {
+    "id": "ITM-006",
+    "wasteGroup": "Metallic Waste",
+    "wasteCategory": "Ferrous Metals",
+    "name": "Tin Cans & Metal Sheets",
+    "unit": "kg",
+    "pricePerUnit": 22.0
+  },
+  {
+    "id": "ITM-007",
+    "wasteGroup": "Metallic Waste",
+    "wasteCategory": "Non-Ferrous & Alloys",
+    "name": "Copper Wire & Heavy Scrap (Taamba)",
+    "unit": "kg",
+    "pricePerUnit": 480.0
+  },
+  {
+    "id": "ITM-008",
+    "wasteGroup": "Metallic Waste",
+    "wasteCategory": "Non-Ferrous & Alloys",
+    "name": "Brass Scrap & Utensils (Peetal)",
+    "unit": "kg",
+    "pricePerUnit": 340.0
+  },
+  {
+    "id": "ITM-009",
+    "wasteGroup": "Metallic Waste",
+    "wasteCategory": "Non-Ferrous & Alloys",
+    "name": "Aluminium Cans & Utensils",
+    "unit": "kg",
+    "pricePerUnit": 105.0
+  },
+  {
+    "id": "ITM-010",
+    "wasteGroup": "Plastics",
+    "wasteCategory": "Rigid Plastics",
+    "name": "PET Water & Soft Drink Bottles",
+    "unit": "kg",
+    "pricePerUnit": 16.0
+  },
+  {
+    "id": "ITM-011",
+    "wasteGroup": "Plastics",
+    "wasteCategory": "Rigid Plastics",
+    "name": "HDPE Oil, Shampoo & Chemical Jars",
+    "unit": "kg",
+    "pricePerUnit": 24.0
+  },
+  {
+    "id": "ITM-012",
+    "wasteGroup": "Plastics",
+    "wasteCategory": "Rigid Plastics",
+    "name": "PP Hard Plastic Buckets & Crates",
+    "unit": "kg",
+    "pricePerUnit": 20.0
+  },
+  {
+    "id": "ITM-013",
+    "wasteGroup": "Plastics",
+    "wasteCategory": "Soft / Film Plastics",
+    "name": "LDPE Carry Bags & Packaging Film",
+    "unit": "kg",
+    "pricePerUnit": 9.0
+  },
+  {
+    "id": "ITM-014",
+    "wasteGroup": "Electronic Waste",
+    "wasteCategory": "Consumer E-Waste",
+    "name": "Circuit Boards & Motherboards (PCB)",
+    "unit": "kg",
+    "pricePerUnit": 180.0
+  },
+  {
+    "id": "ITM-015",
+    "wasteGroup": "Electronic Waste",
+    "wasteCategory": "Consumer E-Waste",
+    "name": "Old Mobile Phones & Tabs",
+    "unit": "piece",
+    "pricePerUnit": 50.0
+  },
+  {
+    "id": "ITM-016",
+    "wasteGroup": "Electronic Waste",
+    "wasteCategory": "Batteries & Power",
+    "name": "Lead Acid Inverter Batteries",
+    "unit": "kg",
+    "pricePerUnit": 92.0
+  },
+  {
+    "id": "ITM-017",
+    "wasteGroup": "Glass & Others",
+    "wasteCategory": "Glass Containers",
+    "name": "Beer & Clear Glass Bottles",
+    "unit": "kg",
+    "pricePerUnit": 4.5
+  },
+  {
+    "id": "ITM-018",
+    "wasteGroup": "Glass & Others",
+    "wasteCategory": "Glass Containers",
+    "name": "Mixed Broken Glass (Cullet)",
+    "unit": "kg",
+    "pricePerUnit": 2.0
+  }
+]

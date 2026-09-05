@@ -1,0 +1,7 @@
+[
+  { "id": "WG-01", "name": "Dry Waste", "icon": "Boxes", "swatch": "kraft" },
+  { "id": "WG-02", "name": "E-Waste", "icon": "Cpu", "swatch": "circuit" },
+  { "id": "WG-03", "name": "Domestic Hazardous Waste", "icon": "AlertTriangle", "swatch": "resin" },
+  { "id": "WG-04", "name": "Wet Waste", "icon": "Apple", "swatch": "flint" },
+  { "id": "WG-05", "name": "Sanitary & Medical Waste", "icon": "HeartPulse", "swatch": "gunmetal" }
+]

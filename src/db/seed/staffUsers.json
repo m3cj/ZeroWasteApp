@@ -1,0 +1,4 @@
+[
+  { "id": "STF-001", "name": "Vikram Singh", "mobileNo": "9801122334", "password": "password123", "role": "technician", "isActive": true },
+  { "id": "STF-003", "name": "Pooja Sharma", "mobileNo": "9801122336", "password": "password123", "role": "data_operator", "isActive": true }
+]

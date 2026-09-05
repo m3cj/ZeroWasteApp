@@ -1,0 +1,8 @@
+[
+  { "ward": "Ward 45 (Kankarbagh)", "communityId": "COM-001", "nextVisitDate": "2026-08-25" },
+  { "ward": "Ward 52 (Bairiya)", "communityId": "COM-002", "nextVisitDate": "2026-08-26" },
+  { "ward": "Ward 38 (Rajendra Nagar)", "communityId": "COM-003", "nextVisitDate": "2026-08-27" },
+  { "ward": "Ward 22 (Boring Road)", "communityId": "COM-004", "nextVisitDate": "2026-08-28" },
+  { "ward": "Ward 14 (Patliputra Colony)", "communityId": "COM-005", "nextVisitDate": "2026-08-29" },
+  { "ward": "Ward 30 (Kadamkuan)", "communityId": "COM-006", "nextVisitDate": "2026-08-30" }
+]

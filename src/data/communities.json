@@ -1,0 +1,62 @@
+[
+  {
+    "id": "COM-001",
+    "name": "Kankarbagh",
+    "ward": "Ward 45",
+    "pincode": "800020",
+    "city": "Patna",
+    "zone": "South Zone",
+    "technicianAssigned": "Ajay Paswan",
+    "description": "Dense residential & commercial hub, Doctors Colony, Tempo Stand"
+  },
+  {
+    "id": "COM-002",
+    "name": "Bairiya",
+    "ward": "Ward 52",
+    "pincode": "800007",
+    "city": "Patna",
+    "zone": "East Zone",
+    "technicianAssigned": "Manish Kumar",
+    "description": "Bairiya ISBT corridor, mixed wholesale & residential clusters"
+  },
+  {
+    "id": "COM-003",
+    "name": "Rajendra Nagar",
+    "ward": "Ward 38",
+    "pincode": "800016",
+    "city": "Patna",
+    "zone": "Central Zone",
+    "technicianAssigned": "Sunil Verma",
+    "description": "Railway Terminal area, Road No 1-12, residential & student hubs"
+  },
+  {
+    "id": "COM-004",
+    "name": "Boring Road",
+    "ward": "Ward 22",
+    "pincode": "800001",
+    "city": "Patna",
+    "zone": "West Zone",
+    "technicianAssigned": "Pooja Singh",
+    "description": "Commercial avenue, coaching centers, food points & high-density apartments"
+  },
+  {
+    "id": "COM-005",
+    "name": "Patliputra Colony",
+    "ward": "Ward 14",
+    "pincode": "800013",
+    "city": "Patna",
+    "zone": "North-West Zone",
+    "technicianAssigned": "Vikram Soren",
+    "description": "Planned residential colony, Industrial Area & institutional zones"
+  },
+  {
+    "id": "COM-006",
+    "name": "Kadamkuan",
+    "ward": "Ward 30",
+    "pincode": "800003",
+    "city": "Patna",
+    "zone": "Central Zone",
+    "technicianAssigned": "Ravi Shankar",
+    "description": "Traditional trade market, dense households & Sahityakar Colony"
+  }
+]

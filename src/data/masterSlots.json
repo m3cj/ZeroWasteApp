@@ -1,0 +1,62 @@
+[
+  {
+    "id": "SLOT-01",
+    "day": "Thursday",
+    "date": "2026-08-28",
+    "formattedDate": "28 Aug 2026",
+    "timeRange": "8:00 AM - 11:00 AM",
+    "slotName": "Morning Slot",
+    "status": "Available",
+    "technician": "Ajay Paswan"
+  },
+  {
+    "id": "SLOT-02",
+    "day": "Thursday",
+    "date": "2026-08-28",
+    "formattedDate": "28 Aug 2026",
+    "timeRange": "12:00 PM - 3:00 PM",
+    "slotName": "Afternoon Slot",
+    "status": "Available",
+    "technician": "Manish Kumar"
+  },
+  {
+    "id": "SLOT-03",
+    "day": "Friday",
+    "date": "2026-08-29",
+    "formattedDate": "29 Aug 2026",
+    "timeRange": "8:00 AM - 11:00 AM",
+    "slotName": "Morning Slot",
+    "status": "Available",
+    "technician": "Sunil Verma"
+  },
+  {
+    "id": "SLOT-04",
+    "day": "Friday",
+    "date": "2026-08-29",
+    "formattedDate": "29 Aug 2026",
+    "timeRange": "4:00 PM - 7:00 PM",
+    "slotName": "Evening Slot",
+    "status": "Available",
+    "technician": "Ajay Paswan"
+  },
+  {
+    "id": "SLOT-05",
+    "day": "Saturday",
+    "date": "2026-08-30",
+    "formattedDate": "30 Aug 2026",
+    "timeRange": "8:00 AM - 11:00 AM",
+    "slotName": "Morning Slot",
+    "status": "Available",
+    "technician": "Pooja Singh"
+  },
+  {
+    "id": "SLOT-06",
+    "day": "Sunday",
+    "date": "2026-08-31",
+    "formattedDate": "31 Aug 2026",
+    "timeRange": "9:00 AM - 1:00 PM",
+    "slotName": "Special Weekend Slot",
+    "status": "Available",
+    "technician": "Vikram Soren"
+  }
+]
