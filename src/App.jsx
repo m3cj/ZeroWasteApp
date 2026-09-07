@@ -169,10 +169,27 @@ export default function App() {
     const items = bookingData.items || [];
     const paymentMethod = bookingData.paymentMethod || 'cash';
 
+    let generatorId = bookingData.generatorId || null;
+    let generatorName = bookingData.name || bookingData.customerName || '';
+
+    // If customer details were provided on Review & Pay for stag intake (no fields compulsory)
+    if (!generatorId && (bookingData.customerName || bookingData.customerPhone || bookingData.customerAddress)) {
+      const createdGen = registerGenerator({
+        name: bookingData.customerName || 'Citizen',
+        phone: bookingData.customerPhone || '',
+        address: bookingData.customerAddress || '',
+        category: bookingData.customerCategory || 'family',
+      });
+      if (createdGen) {
+        generatorId = createdGen.id;
+        generatorName = createdGen.name;
+      }
+    }
+
     // Direct purchase with calculated items
     const result = recordPurchase({
       ticketId: bookingData.ticketId || null,
-      generatorId: bookingData.generatorId,
+      generatorId,
       technicianId: currentStaff?.id || 'STF-001',
       items: items.map((item) => ({
         itemId: item.id || item.itemId,
@@ -186,6 +203,8 @@ export default function App() {
 
     const confirmed = {
       ...bookingData,
+      name: generatorName || bookingData.name || (generatorId ? 'Customer' : 'Direct Intake'),
+      category: bookingData.customerCategory || bookingData.category || 'family',
       paymentMethod,
       id: result?.transaction?.id || `TXN-PUR-${Date.now().toString().slice(-4)}`,
     };

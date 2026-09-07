@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Banknote, QrCode, CreditCard, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Banknote, QrCode, CreditCard, ArrowRight, ArrowLeft, UserPlus, X } from 'lucide-react';
 import CategoryTag from '../shared/CategoryTag';
 import { formatCurrency } from '../../utils/formatters';
 
 /**
  * Screen: Review & Pay (formerly StaffSlotScreen)
  * - Title: Review & Pay
- * - User info: Only shown if a customer is selected; otherwise shows Direct Entry badge
+ * - User info: Shows selected customer OR "Add Customer" option (stag intake with no compulsory fields)
  * - In-screen back button
  * - Kabaad Item list with totals
  * - Payment Method selection: Cash, UPI, Other
@@ -18,6 +18,13 @@ export default function StaffSlotScreen({
   onBack,
 }) {
   const [paymentMethod, setPaymentMethod] = useState('cash'); // 'cash' | 'upi' | 'other'
+
+  // Optional customer details for Stag Kabaad Entry (no fields compulsory)
+  const [showAddCustomer, setShowAddCustomer] = useState(false);
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
+  const [customerCategory, setCustomerCategory] = useState('family');
 
   const items = staffEntry.items || [];
   const cartGrandTotal = items.reduce(
@@ -34,6 +41,10 @@ export default function StaffSlotScreen({
       ...staffEntry,
       paymentMethod,
       grandTotal: cartGrandTotal,
+      customerName: customerName.trim(),
+      customerPhone: customerPhone.trim(),
+      customerAddress: customerAddress.trim(),
+      customerCategory,
     });
   };
 
@@ -66,7 +77,7 @@ export default function StaffSlotScreen({
         </div>
       </div>
 
-      {/* 2. User Info: only rendered if customer was selected */}
+      {/* 2. User Info OR Stag Add Customer Option */}
       {hasUser ? (
         <div className="rounded-2xl border border-stone-200/90 bg-white p-3 shadow-xs">
           <div className="flex items-center justify-between gap-2">
@@ -85,11 +96,114 @@ export default function StaffSlotScreen({
           </div>
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-stone-200 bg-stone-50/80 p-2.5 text-xs text-stone-500 flex items-center justify-between">
-          <span className="font-semibold text-stone-700">Intake Mode:</span>
-          <span className="font-mono text-[10px] bg-stone-200/80 text-stone-700 px-2 py-0.5 rounded font-bold">
-            Direct Kabaad Entry
-          </span>
+        <div className="rounded-2xl border border-stone-200/90 bg-white p-3.5 shadow-xs space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#2C5F74]/10 text-[#2C5F74]">
+                <UserPlus size={15} />
+              </div>
+              <div>
+                <h3 className="font-heading text-xs font-bold text-ink">
+                  Add Customer
+                </h3>
+                <p className="font-mono text-[10px] text-stone-400">
+                  Optional • No fields compulsory
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowAddCustomer((prev) => !prev)}
+              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition active:scale-95 flex items-center gap-1 ${
+                showAddCustomer
+                  ? 'border border-stone-200 bg-stone-100 text-stone-700 hover:bg-stone-200'
+                  : 'bg-[#2C5F74] text-white hover:bg-[#234d5e] shadow-xs'
+              }`}
+            >
+              <span>{showAddCustomer ? 'Hide' : '+ Add Customer'}</span>
+            </button>
+          </div>
+
+          {showAddCustomer && (
+            <div className="pt-2.5 border-t border-stone-100 space-y-2.5 animate-fade-in">
+              <div>
+                <label className="block text-[11px] font-bold text-stone-600 mb-1">
+                  Customer Name <span className="font-normal text-stone-400 font-mono">(Optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  placeholder="e.g. Ramesh Sharma"
+                  className="w-full rounded-xl border border-stone-200 bg-stone-50/70 px-3 py-2 text-xs font-medium text-ink placeholder:text-stone-400 focus:border-[#2C5F74] focus:bg-white focus:outline-none transition"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[11px] font-bold text-stone-600 mb-1">
+                    Phone Number <span className="font-normal text-stone-400 font-mono">(Optional)</span>
+                  </label>
+                  <input
+                    type="tel"
+                    value={customerPhone}
+                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    placeholder="e.g. 9841234567"
+                    className="w-full rounded-xl border border-stone-200 bg-stone-50/70 px-3 py-2 text-xs font-medium text-ink placeholder:text-stone-400 focus:border-[#2C5F74] focus:bg-white focus:outline-none transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-stone-600 mb-1">
+                    Category <span className="font-normal text-stone-400 font-mono">(Optional)</span>
+                  </label>
+                  <select
+                    value={customerCategory}
+                    onChange={(e) => setCustomerCategory(e.target.value)}
+                    className="w-full rounded-xl border border-stone-200 bg-stone-50/70 px-2.5 py-2 text-xs font-medium text-ink focus:border-[#2C5F74] focus:bg-white focus:outline-none transition"
+                  >
+                    <option value="family">Family (Residential)</option>
+                    <option value="business">Business (Commercial)</option>
+                    <option value="public">Public / Institution</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-stone-600 mb-1">
+                  Address / Location <span className="font-normal text-stone-400 font-mono">(Optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={customerAddress}
+                  onChange={(e) => setCustomerAddress(e.target.value)}
+                  placeholder="e.g. Kupondole, Ward 3"
+                  className="w-full rounded-xl border border-stone-200 bg-stone-50/70 px-3 py-2 text-xs font-medium text-ink placeholder:text-stone-400 focus:border-[#2C5F74] focus:bg-white focus:outline-none transition"
+                />
+              </div>
+
+              {(customerName || customerPhone || customerAddress) && (
+                <div className="flex items-center justify-between rounded-xl bg-emerald-50 px-3 py-2 border border-emerald-200/70 text-xs">
+                  <span className="font-medium text-emerald-800 truncate">
+                    Profile will be registered for: <strong>{customerName || 'Direct Citizen'}</strong>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCustomerName('');
+                      setCustomerPhone('');
+                      setCustomerAddress('');
+                      setCustomerCategory('family');
+                    }}
+                    className="text-[10px] font-bold text-emerald-700 hover:text-emerald-900 underline shrink-0 ml-2"
+                  >
+                    Clear
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 

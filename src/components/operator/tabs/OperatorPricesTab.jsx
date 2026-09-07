@@ -229,16 +229,6 @@ export default function OperatorPricesTab({
         <div className="flex items-center gap-2 flex-wrap">
           <button
             type="button"
-            onClick={handleUndoLastBulk}
-            className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2 text-xs font-bold text-stone-700 hover:bg-stone-100 active:scale-95 transition"
-            title="Restore rates prior to latest bulk shift"
-          >
-            <RotateCcw size={14} className="text-amber-700" />
-            <span>Undo Last Bulk Shift</span>
-          </button>
-
-          <button
-            type="button"
             onClick={() => setShowAuditModal(true)}
             className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2 text-xs font-bold text-ink hover:bg-stone-100 active:scale-95 transition"
           >
@@ -246,98 +236,6 @@ export default function OperatorPricesTab({
             <span>Price Audit Log ({priceAuditLog.length})</span>
           </button>
         </div>
-      </div>
-
-      {/* Flawless Bulk Rate Revision Tool with Safe Preview Staging */}
-      <div className="rounded-2xl border border-stone-200/90 bg-white p-4 sm:p-5 shadow-xs space-y-3.5">
-        <div className="flex items-center justify-between border-b border-stone-100 pb-2.5">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <ArrowUpDown size={15} />
-            </div>
-            <div>
-              <h2 className="font-heading text-xs font-bold text-ink uppercase tracking-wider">
-                Bulk Rate Revision
-              </h2>
-              <p className="font-mono text-[11px] text-stone-500">
-                Safe 2-step process: stage percentage delta, preview affected items, then commit
-              </p>
-            </div>
-          </div>
-
-          <span className="font-mono text-[11px] text-stone-500 font-semibold hidden sm:inline-block">
-            Targeting: {bulkTarget === 'all' ? 'All Master Items' : `${wasteCategories.find((c) => c.id === bulkTarget)?.name || bulkTarget}`}
-          </span>
-        </div>
-
-        <form onSubmit={handleOpenPreview} className="flex flex-wrap items-center gap-3">
-          {/* Target Scope Dropdown */}
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-mono text-stone-500 font-bold uppercase">Scope:</span>
-            <select
-              value={bulkTarget}
-              onChange={(e) => setBulkTarget(e.target.value)}
-              className="rounded-xl border border-stone-200 bg-stone-50/70 px-3 py-2 text-xs font-medium text-ink focus:border-primary focus:outline-none"
-            >
-              <option value="all">All Items ({masterItems.length})</option>
-              {wasteCategories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name} ({masterItems.filter((i) => i.categoryId === c.id || i.wasteCategory === c.name).length} items)
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Percentage Delta Input */}
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-mono text-stone-500 font-bold uppercase">Delta:</span>
-            <div className="relative">
-              <input
-                type="number"
-                step="0.5"
-                value={bulkPercent}
-                onChange={(e) => setBulkPercent(e.target.value)}
-                placeholder="e.g. 5 or -5"
-                className="w-24 rounded-xl border border-stone-200 bg-stone-50/70 py-2 pl-3 pr-6 text-xs font-mono font-bold text-ink focus:border-primary focus:bg-white focus:outline-none"
-              />
-              <span className="absolute inset-y-0 right-0 flex items-center pr-2 text-xs text-stone-400 font-mono">
-                %
-              </span>
-            </div>
-          </div>
-
-          {/* Preset Buttons (sets percentage without destructive instant auto-commit!) */}
-          <div className="flex items-center gap-1 font-mono text-xs">
-            <span className="text-stone-400 text-[11px] mr-1 hidden md:inline">Presets:</span>
-            {[2, 5, 10, -2, -5].map((pct) => {
-              const isSelected = Number(bulkPercent) === pct;
-              return (
-                <button
-                  key={pct}
-                  type="button"
-                  onClick={() => setBulkPercent(String(pct))}
-                  className={`rounded-lg px-2.5 py-1 text-xs font-bold transition ${
-                    isSelected
-                      ? 'bg-primary text-white shadow-2xs'
-                      : 'border border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 hover:border-stone-300'
-                  }`}
-                >
-                  {pct > 0 ? `+${pct}%` : `${pct}%`}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Preview Trigger CTA */}
-          <button
-            type="submit"
-            disabled={!bulkPercent || Number(bulkPercent) === 0}
-            className="ml-auto rounded-xl bg-primary px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-primary-dark disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition flex items-center gap-1.5"
-          >
-            <span>Preview Revision</span>
-            <span className="font-mono">({bulkCandidateItems.length} items) →</span>
-          </button>
-        </form>
       </div>
 
       {/* Filter and Search Bar */}
@@ -513,9 +411,8 @@ export default function OperatorPricesTab({
       </div>
 
       {/* =================================================================== */}
-      {/* BULK REVISION REVIEW MODAL (STAGING & SELECTIVE COMMITTING)         */}
-      {/* =================================================================== */}
-      {isPreviewOpen && (
+      {/* BULK REVISION REVIEW MODAL (STAGING & SELECTIVE COMMITTING) - DISABLED FROM UI */}
+      {false && isPreviewOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4 animate-fade-in">
           <div className="w-full max-w-2xl rounded-2xl border border-stone-200 bg-white p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
             {/* Modal Header */}
