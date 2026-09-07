@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Banknote, QrCode, CreditCard, ArrowRight } from 'lucide-react';
+import { Banknote, QrCode, CreditCard, ArrowRight, ArrowLeft } from 'lucide-react';
 import CategoryTag from '../shared/CategoryTag';
 import { formatCurrency } from '../../utils/formatters';
 
 /**
  * Screen: Review & Pay (formerly StaffSlotScreen)
  * - Title: Review & Pay
- * - Small user info: Ticket ID, Name, Category
+ * - User info: Only shown if a customer is selected; otherwise shows Direct Entry badge
+ * - In-screen back button
  * - Kabaad Item list with totals
  * - Payment Method selection: Cash, UPI, Other
  * - In-screen action button
@@ -14,6 +15,7 @@ import { formatCurrency } from '../../utils/formatters';
 export default function StaffSlotScreen({
   staffEntry,
   onConfirmBooking,
+  onBack,
 }) {
   const [paymentMethod, setPaymentMethod] = useState('cash'); // 'cash' | 'upi' | 'other'
 
@@ -41,32 +43,55 @@ export default function StaffSlotScreen({
     { id: 'other', label: 'Other', icon: CreditCard },
   ];
 
+  const hasUser = Boolean(staffEntry.name || staffEntry.generatorId || staffEntry.generator);
+
   return (
     <div className="space-y-3.5 pb-6 animate-fade-in">
-      {/* 1. Header */}
-      <div>
-        <h2 className="font-heading text-lg font-bold text-ink tracking-tight">
-          Review & Pay
-        </h2>
-      </div>
-
-      {/* 2. Small User Info: Ticket ID, Name, Category */}
-      <div className="rounded-2xl border border-stone-200/90 bg-white p-3 shadow-xs">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="font-heading text-sm font-bold text-ink truncate">
-              {staffEntry.name || staffEntry.ownerName || 'Customer'}
-            </span>
-            <CategoryTag category={staffEntry.category} size="xs" />
-          </div>
-
-          {staffEntry.ticketId && (
-            <span className="font-mono text-[9px] font-bold text-stone-600 bg-stone-100 rounded px-1.5 py-0.5 shrink-0 border border-stone-200/60">
-              {staffEntry.ticketId}
-            </span>
-          )}
+      {/* 1. Header with Back Button */}
+      <div className="flex items-center gap-2">
+        {onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            className="flex h-8 w-8 items-center justify-center rounded-xl bg-stone-200/70 hover:bg-stone-300 text-stone-700 active:scale-95 transition shrink-0"
+            title="Back to Kabaad Entry"
+          >
+            <ArrowLeft size={16} />
+          </button>
+        )}
+        <div>
+          <h2 className="font-heading text-lg font-bold text-ink tracking-tight">
+            Review & Pay
+          </h2>
         </div>
       </div>
+
+      {/* 2. User Info: only rendered if customer was selected */}
+      {hasUser ? (
+        <div className="rounded-2xl border border-stone-200/90 bg-white p-3 shadow-xs">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="font-heading text-sm font-bold text-ink truncate">
+                {staffEntry.name || staffEntry.ownerName || 'Customer'}
+              </span>
+              {staffEntry.category && <CategoryTag category={staffEntry.category} size="xs" />}
+            </div>
+
+            {staffEntry.ticketId && (
+              <span className="font-mono text-[9px] font-bold text-stone-600 bg-stone-100 rounded px-1.5 py-0.5 shrink-0 border border-stone-200/60">
+                {staffEntry.ticketId}
+              </span>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-dashed border-stone-200 bg-stone-50/80 p-2.5 text-xs text-stone-500 flex items-center justify-between">
+          <span className="font-semibold text-stone-700">Intake Mode:</span>
+          <span className="font-mono text-[10px] bg-stone-200/80 text-stone-700 px-2 py-0.5 rounded font-bold">
+            Direct Kabaad Entry
+          </span>
+        </div>
+      )}
 
       {/* 3. Kabaad Item Section (renamed from Recorded Kabaad Items) */}
       <div className="rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs space-y-3">

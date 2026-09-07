@@ -241,6 +241,30 @@ export default function App() {
     setTechTopTab('generator');
   };
 
+  // Direct Kabaad Entry without selecting any user (stag intake without profile link)
+  const handleDirectKabaadEntry = () => {
+    setStaffEntry({
+      entryMode: 'stag',
+      isStandalone: true,
+      items: [],
+      name: '',
+      category: null,
+      phone: '',
+      address: '',
+      selectedSlotId: null,
+      slotDay: null,
+      slotTime: null,
+      timeRange: null,
+      generatorId: null,
+      ticketId: null,
+      ticket: null,
+      generator: null,
+    });
+    setSelectedTicketForProfile(null);
+    setFlow2Step('itemEntry');
+    setTechTopTab('generator');
+  };
+
   const handleUpdateTicketSlot = (ticketId, slotId) => {
     updateTicketSlot(ticketId, slotId);
     const slot = slotId ? (enrichedSlots.find((s) => s.id === slotId) || null) : null;
@@ -380,14 +404,9 @@ export default function App() {
           setTechTopTab('generator');
         } else if (techTopTab === 'generator') {
           if (flow2Step === 'itemEntry') {
-            if (staffEntry.ticketId) {
-              const ticket = technicianTickets.find((t) => t.id === staffEntry.ticketId);
-              if (ticket) setSelectedTicketForProfile(ticket);
-              else setSelectedTicketForProfile(null);
-              setTechTopTab('generator');
-            } else {
-              setFlow2Step('desk');
-            }
+            setSelectedTicketForProfile(null);
+            handleResetFlow2();
+            setFlow2Step('desk');
           } else if (flow2Step === 'slot') {
             setFlow2Step('itemEntry');
           } else if (flow2Step === 'success') {
@@ -472,6 +491,7 @@ export default function App() {
               staffEntry={staffEntry}
               setStaffEntry={setStaffEntry}
               generators={db.generators}
+              onDirectKabaadEntry={handleDirectKabaadEntry}
               onProceedToItemEntry={(record) => {
                 handleSelectGeneratorFromDesk(record);
               }}
@@ -494,6 +514,11 @@ export default function App() {
               generators={db.generators}
               onUpdateSlot={handleUpdateTicketSlot}
               onProceedToSlot={() => setFlow2Step('slot')}
+              onBack={() => {
+                setSelectedTicketForProfile(null);
+                handleResetFlow2();
+                setFlow2Step('desk');
+              }}
             />
           )}
 
@@ -501,6 +526,7 @@ export default function App() {
             <StaffSlotScreen
               staffEntry={staffEntry}
               onConfirmBooking={handleConfirmFlow2Booking}
+              onBack={() => setFlow2Step('itemEntry')}
             />
           )}
 

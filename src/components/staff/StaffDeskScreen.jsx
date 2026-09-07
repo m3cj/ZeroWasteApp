@@ -10,6 +10,7 @@ import {
   MapPin,
   X,
   Users,
+  PlusCircle,
 } from 'lucide-react';
 
 import { registerGenerator } from '../../db/operations';
@@ -17,13 +18,15 @@ import { registerGenerator } from '../../db/operations';
 /**
  * Flow 2 - Page 2: Technician Search & Quick Registration Desk (Role: Zero Waste Technician)
  * - Global search bar: "search in niwasi, contact, user"
- * - Add New Person button (opens modal, replaces old tab switcher)
- * - Cards: Entire card is clickable; 'Select' button removed.
+ * - Add New Person button (opens modal)
+ * - Full-width "Kabaad Entry" button for direct stag kabaad intake without user profile
+ * - Cards: Entire card is clickable
  */
 export default function StaffDeskScreen({
   staffEntry,
   setStaffEntry,
   generators = [],
+  onDirectKabaadEntry,
   onProceedToItemEntry,
   onProceedWithExistingUser,
   onRegisterGenerator,
@@ -132,6 +135,27 @@ export default function StaffDeskScreen({
     onProceedToItemEntry(newRecord);
   };
 
+  const handleDirectKabaadEntry = () => {
+    const blankRecord = {
+      mode: 'stag',
+      isStandalone: true,
+      generatorId: null,
+      name: '',
+      category: null,
+      address: '',
+      phone: '',
+      items: [],
+      selectedSlotId: null,
+      ticketId: null,
+    };
+    if (setStaffEntry) setStaffEntry(blankRecord);
+    if (onDirectKabaadEntry) {
+      onDirectKabaadEntry(blankRecord);
+    } else if (onProceedToItemEntry) {
+      onProceedToItemEntry(blankRecord);
+    }
+  };
+
   const categoryOptions = [
     { id: 'family', label: 'Family', icon: Home },
     { id: 'business', label: 'Business', icon: Building2 },
@@ -174,6 +198,16 @@ export default function StaffDeskScreen({
           <span>Add New Person</span>
         </button>
       </div>
+
+      {/* 2. Full-Width Direct "Kabaad Entry" Button (Stag intake without customer profile) */}
+      <button
+        type="button"
+        onClick={handleDirectKabaadEntry}
+        className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#2C5F74] hover:bg-[#234d5e] py-3.5 px-4 text-xs font-bold text-white shadow-md shadow-[#2C5F74]/20 active:scale-[0.985] transition group"
+      >
+        <PlusCircle size={16} className="text-amber-400 group-hover:scale-110 transition-transform" />
+        <span className="font-heading tracking-wide uppercase">Kabaad Entry</span>
+      </button>
 
       {/* 3. Contact List (Clean Clickable Cards without Select Button) */}
       <div className="space-y-2 pt-1">

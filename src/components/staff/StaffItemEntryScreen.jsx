@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import {
   ArrowRight,
+  ArrowLeft,
   Info,
   X,
   Phone,
@@ -18,11 +19,11 @@ import KuraItemEntry from '../shared/KuraItemEntry';
 import { formatCurrency } from '../../utils/formatters';
 
 /**
- * Screen: Purchase Kabaad
- * - Title: Purchase Kabaad
- * - User info: Name, Category, and prominent high-contrast "Info" button (replaces ticket ID)
- * - "Info" button opens Quick Profile modal with customer metrics and Pickup Slot (with "No Slots" if unscheduled)
- * - Immediate Kabaad Item entry form
+ * Screen: Purchase Kabaad / Kabaad Entry
+ * - Title: Purchase Kabaad (or Kabaad Entry when no user is selected)
+ * - User info: Only displayed if customer is selected, with high-contrast "Info" button
+ * - Stag entry: When no customer is selected, no user info or profile badge is displayed
+ * - Direct back button in header
  * - In-screen Proceed button
  */
 export default function StaffItemEntryScreen({
@@ -35,6 +36,7 @@ export default function StaffItemEntryScreen({
   generators = [],
   onUpdateSlot,
   onProceedToSlot,
+  onBack,
 }) {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [isChangingSlot, setIsChangingSlot] = useState(false);
@@ -127,37 +129,53 @@ export default function StaffItemEntryScreen({
   const totalPayout = generator.totalPayout ?? generator.totalPayouts ?? 0;
   const dues = generator.outstandingDues ?? generator.dues ?? 0;
 
+  const hasUser = Boolean(staffEntry.name || staffEntry.generatorId || staffEntry.generator);
+
   return (
     <div className="space-y-3 pb-6 animate-fade-in">
-      {/* 1. Title */}
-      <div>
-        <h2 className="font-heading text-lg font-bold text-ink tracking-tight">
-          Purchase Kabaad
-        </h2>
-      </div>
-
-      {/* 2. Top User Profile Badge: Name, Category, and High-Contrast "Info" Button */}
-      <div className="rounded-2xl border border-stone-200/90 bg-white p-3 shadow-xs">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="font-heading text-sm font-bold text-ink truncate">
-              {staffEntry.name || staffEntry.ownerName || 'Customer'}
-            </span>
-            <CategoryTag category={staffEntry.category} size="xs" />
-          </div>
-
-          {/* High Contrast Info Button (Ticket number removed per requirements) */}
+      {/* 1. Title Header with In-Screen Back Button */}
+      <div className="flex items-center gap-2">
+        {onBack && (
           <button
             type="button"
-            onClick={() => setIsInfoModalOpen(true)}
-            className="flex items-center gap-1.5 rounded-xl bg-stone-900 hover:bg-black text-white px-3 py-1.5 font-heading text-xs font-bold shadow-xs active:scale-95 transition shrink-0"
-            title="Customer Info & Pickup Slot"
+            onClick={onBack}
+            className="flex h-8 w-8 items-center justify-center rounded-xl bg-stone-200/70 hover:bg-stone-300 text-stone-700 active:scale-95 transition shrink-0"
+            title="Back to Waste Generator Desk"
           >
-            <Info size={13} className="text-amber-400" />
-            <span>Info</span>
+            <ArrowLeft size={16} />
           </button>
+        )}
+        <div>
+          <h2 className="font-heading text-lg font-bold text-ink tracking-tight">
+            {hasUser ? 'Purchase Kabaad' : 'Kabaad Entry'}
+          </h2>
         </div>
       </div>
+
+      {/* 2. Top User Profile Badge: ONLY rendered if a user is selected (hidden for stag entry) */}
+      {hasUser && (
+        <div className="rounded-2xl border border-stone-200/90 bg-white p-3 shadow-xs">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="font-heading text-sm font-bold text-ink truncate">
+                {staffEntry.name || staffEntry.ownerName || 'Customer'}
+              </span>
+              {staffEntry.category && <CategoryTag category={staffEntry.category} size="xs" />}
+            </div>
+
+            {/* High Contrast Info Button */}
+            <button
+              type="button"
+              onClick={() => setIsInfoModalOpen(true)}
+              className="flex items-center gap-1.5 rounded-xl bg-stone-900 hover:bg-black text-white px-3 py-1.5 font-heading text-xs font-bold shadow-xs active:scale-95 transition shrink-0"
+              title="Customer Info & Pickup Slot"
+            >
+              <Info size={13} className="text-amber-400" />
+              <span>Info</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* 3. Kabaad Item Form starts immediately */}
       <KuraItemEntry
