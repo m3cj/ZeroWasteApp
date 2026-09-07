@@ -200,29 +200,66 @@ export default function App() {
     setIsWalkInIntake(false);
   };
 
-  // When clicking any user card from the Waste Generator directory
+  // When clicking any user card from the Waste Generator directory -> directly open purchase kabaad screen
   const handleSelectGeneratorFromDesk = (generator) => {
     const existingTicket = technicianTickets.find(
       (t) => t.generatorId === generator.id && t.status !== 'completed'
     );
+    const fullGenerator = (db.generators || []).find((g) => g.id === generator.id) || generator;
     const ticketObj = existingTicket || {
       id: `TKT-2026-${String(generator.id || '0001').replace(/\D/g, '').padStart(4, '0')}`,
       generatorId: generator.id,
-      generator,
+      generator: fullGenerator,
       slotId: null, // No slot preselected
       slot: null,
       estimatedWeight: null,
       notes: '',
     };
-    setSelectedTicketForProfile(ticketObj);
+    const currentSlot =
+      ticketObj.slot ||
+      (ticketObj.slotId ? enrichedSlots.find((s) => s.id === ticketObj.slotId) : null) ||
+      null;
+
+    setStaffEntry({
+      entryMode: 'manual',
+      items: [],
+      name: fullGenerator.name || fullGenerator.ownerName || '',
+      category: fullGenerator.category || 'family',
+      phone: fullGenerator.phone || '',
+      address: fullGenerator.address || '',
+      selectedSlotId: currentSlot?.id || ticketObj.slotId || null,
+      slotDay: currentSlot?.day || null,
+      slotTime: currentSlot?.timeRange || null,
+      timeRange: currentSlot?.timeRange || null,
+      generatorId: fullGenerator.id,
+      ticketId: ticketObj.id,
+      ticket: ticketObj,
+      generator: fullGenerator,
+    });
+    setSelectedTicketForProfile(null);
+    setFlow2Step('itemEntry');
+    setTechTopTab('generator');
   };
 
   const handleUpdateTicketSlot = (ticketId, slotId) => {
     updateTicketSlot(ticketId, slotId);
+    const slot = slotId ? (enrichedSlots.find((s) => s.id === slotId) || null) : null;
     setSelectedTicketForProfile((prev) => {
       if (prev && prev.id === ticketId) {
-        const slot = slotId ? (enrichedSlots.find((s) => s.id === slotId) || null) : null;
         return { ...prev, slotId, slot };
+      }
+      return prev;
+    });
+    setStaffEntry((prev) => {
+      if (prev && (prev.ticketId === ticketId || prev.ticket?.id === ticketId)) {
+        return {
+          ...prev,
+          selectedSlotId: slotId,
+          slotDay: slot?.day || null,
+          slotTime: slot?.timeRange || null,
+          timeRange: slot?.timeRange || null,
+          ticket: prev.ticket ? { ...prev.ticket, slotId, slot } : prev.ticket,
+        };
       }
       return prev;
     });
@@ -453,6 +490,9 @@ export default function App() {
               masterItems={enrichedMasterItems}
               wasteGroups={db.wasteGroups}
               wasteCategories={db.wasteCategories}
+              slots={enrichedSlots}
+              generators={db.generators}
+              onUpdateSlot={handleUpdateTicketSlot}
               onProceedToSlot={() => setFlow2Step('slot')}
             />
           )}
