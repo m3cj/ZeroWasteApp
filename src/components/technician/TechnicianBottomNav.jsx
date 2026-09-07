@@ -5,31 +5,37 @@ export default function TechnicianBottomNav({
   onSelectTab,
   pendingCount = 0,
 }) {
+  // Dashboard is preserved for future release, currently disabled and hidden from screen
   const tabs = [
     {
       id: 'dashboard',
       label: 'Dashboard',
       icon: LayoutDashboard,
       badge: pendingCount > 0 ? pendingCount : null,
+      visible: false, // Disabled and hidden per requirements, will be published in later versions
     },
     {
       id: 'generator',
       label: 'Waste Generator',
       icon: Users,
       badge: null,
+      visible: true,
     },
     {
       id: 'menu',
       label: 'Menu',
       icon: Menu,
       badge: null,
+      visible: true,
     },
   ];
 
+  const visibleTabs = tabs.filter((t) => t.visible !== false);
+
   return (
     <nav className="shrink-0 border-t border-stone-200/80 bg-white/95 backdrop-blur-md px-3 py-2">
-      <div className="grid grid-cols-3 gap-1">
-        {tabs.map((tab) => {
+      <div className={`grid ${visibleTabs.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-2`}>
+        {visibleTabs.map((tab) => {
           const isActive = activeTab === tab.id;
           const Icon = tab.icon;
           return (

@@ -1,7 +1,7 @@
 import { getSeedState } from './seedData';
 
-const STORAGE_KEY = 'sunai-partner-db-v3';
-const PREV_STORAGE_KEY = 'sunai-partner-db-v2';
+const STORAGE_KEY = 'sunai-partner-db-v4';
+const PREV_STORAGE_KEY = 'sunai-partner-db-v3';
 
 let state = null;
 const listeners = new Set();

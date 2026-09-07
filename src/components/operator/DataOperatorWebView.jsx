@@ -11,22 +11,29 @@ import {
   Menu,
   X,
   ShoppingBag,
+  Boxes,
+  FolderTree,
 } from 'lucide-react';
 
+import OperatorGroupsTab from './tabs/OperatorGroupsTab';
+import OperatorCategoriesTab from './tabs/OperatorCategoriesTab';
+import OperatorCatalogueTab from './tabs/OperatorCatalogueTab';
+import OperatorPricesTab from './tabs/OperatorPricesTab';
 import OperatorDashboardTab from './tabs/OperatorDashboardTab';
 import OperatorTicketsTab from './tabs/OperatorTicketsTab';
 import OperatorPurchaseTab from './tabs/OperatorPurchaseTab';
-import OperatorCatalogueTab from './tabs/OperatorCatalogueTab';
-import OperatorPricesTab from './tabs/OperatorPricesTab';
 import OperatorAddGeneratorTab from './tabs/OperatorAddGeneratorTab';
 import OperatorSlotsTab from './tabs/OperatorSlotsTab';
 
 /**
  * Full-Screen Web View Layout for Data Operator Console
- * Clean Grouped Sidebar Navigation:
- * - Brand: Zero Waste (role removed)
- * - Group: OPERATIONS (Dashboard, Tickets, Waste Generators, Pickup Slots)
- * - Group: KABAAD (Purchase Kabaad, Kabaad Catalogue, Kabaad Prices)
+ * Strictly Enabled Links (Order):
+ * 1. Kabaad Group (New dedicated UI)
+ * 2. Kabaad Category (New dedicated UI)
+ * 3. Kabaad Catalogue
+ * 4. Kabaad Prices
+ * 
+ * Disabled links are hidden from the screen but preserved in code for later versions.
  */
 export default function DataOperatorWebView({
   staff,
@@ -35,7 +42,7 @@ export default function DataOperatorWebView({
   enrichedSlots = [],
   onLogout,
 }) {
-  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'tickets' | 'generators' | 'slots' | 'purchase' | 'catalogue' | 'prices'
+  const [activeTab, setActiveTab] = useState('groups'); // 'groups' | 'categories' | 'catalogue' | 'prices' (other tabs preserved)
   const [ticketSubView, setTicketSubView] = useState('all'); // 'all' | 'new-ticket'
   const [preselectedGeneratorId, setPreselectedGeneratorId] = useState(null);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -67,28 +74,31 @@ export default function DataOperatorWebView({
     setIsMobileSidebarOpen(false);
   };
 
-  // Grouped Navigation Sections
+  // Grouped Navigation Sections: Only enabled links are visible; others preserved for future publication
   const navGroups = [
+    {
+      groupLabel: 'Kabaad Operations',
+      items: [
+        { id: 'groups', label: 'Kabaad Group', icon: Boxes, visible: true },
+        { id: 'categories', label: 'Kabaad Category', icon: FolderTree, visible: true },
+        { id: 'catalogue', label: 'Kabaad Catalogue', icon: Layers, visible: true },
+        { id: 'prices', label: 'Kabaad Prices', icon: Tag, visible: true },
+      ],
+    },
     {
       groupLabel: 'Operations',
       items: [
-        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, visible: false },
         {
           id: 'tickets',
           label: 'Tickets',
           icon: ClipboardList,
           badge: pendingTicketsCount > 0 ? pendingTicketsCount : null,
+          visible: false,
         },
-        { id: 'generators', label: 'Waste Generators', icon: Users },
-        { id: 'slots', label: 'Pickup Slots', icon: CalendarDays },
-      ],
-    },
-    {
-      groupLabel: 'Kabaad',
-      items: [
-        { id: 'purchase', label: 'Purchase Kabaad', icon: ShoppingBag },
-        { id: 'catalogue', label: 'Kabaad Catalogue', icon: Layers },
-        { id: 'prices', label: 'Kabaad Prices', icon: Tag },
+        { id: 'generators', label: 'Waste Generators', icon: Users, visible: false },
+        { id: 'slots', label: 'Pickup Slots', icon: CalendarDays, visible: false },
+        { id: 'purchase', label: 'Purchase Kabaad', icon: ShoppingBag, visible: false },
       ],
     },
   ];
@@ -133,7 +143,7 @@ export default function DataOperatorWebView({
           {/* Brand Header: Strictly 'Zero Waste', role removed */}
           <div className="px-5 py-5 border-b border-stone-100 flex items-center justify-between">
             <div
-              onClick={() => handleNavigate('dashboard')}
+              onClick={() => handleNavigate('groups')}
               className="flex items-center gap-3 cursor-pointer group"
             >
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white shadow-xs group-hover:scale-105 transition-transform">
@@ -153,51 +163,56 @@ export default function DataOperatorWebView({
             </button>
           </div>
 
-          {/* Grouped Navigation Links */}
+          {/* Grouped Navigation Links (Only visible links rendered; disabled links hidden per requirements) */}
           <nav className="p-3 space-y-4 overflow-y-auto flex-1">
-            {navGroups.map((group) => (
-              <div key={group.groupLabel} className="space-y-1">
-                <div className="px-3.5 pt-2 pb-1 font-mono text-[10px] font-bold uppercase tracking-wider text-stone-400">
-                  {group.groupLabel}
-                </div>
+            {navGroups.map((group) => {
+              const visibleItems = (group.items || []).filter((item) => item.visible !== false);
+              if (visibleItems.length === 0) return null;
 
-                {group.items.map((item) => {
-                  const active = activeTab === item.id;
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => handleNavigate(item.id, 'all')}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                        active
-                          ? 'bg-primary text-white shadow-xs'
-                          : 'text-stone-600 hover:bg-stone-100/90 hover:text-ink'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Icon
-                          size={16}
-                          className={active ? 'text-white' : 'text-stone-400'}
-                        />
-                        <span>{item.label}</span>
-                      </div>
-                      {item.badge !== null && item.badge !== undefined && (
-                        <span
-                          className={`rounded-full px-2 py-0.5 font-mono text-[10px] font-bold ${
-                            active
-                              ? 'bg-white/25 text-white'
-                              : 'bg-amber-100 text-amber-800'
-                          }`}
-                        >
-                          {item.badge}
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
+              return (
+                <div key={group.groupLabel} className="space-y-1">
+                  <div className="px-3.5 pt-2 pb-1 font-mono text-[10px] font-bold uppercase tracking-wider text-stone-400">
+                    {group.groupLabel}
+                  </div>
+
+                  {visibleItems.map((item) => {
+                    const active = activeTab === item.id;
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => handleNavigate(item.id, 'all')}
+                        className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                          active
+                            ? 'bg-primary text-white shadow-xs'
+                            : 'text-stone-600 hover:bg-stone-100/90 hover:text-ink'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <Icon
+                            size={16}
+                            className={active ? 'text-white' : 'text-stone-400'}
+                          />
+                          <span>{item.label}</span>
+                        </div>
+                        {item.badge !== null && item.badge !== undefined && (
+                          <span
+                            className={`rounded-full px-2 py-0.5 font-mono text-[10px] font-bold ${
+                              active
+                                ? 'bg-white/25 text-white'
+                                : 'bg-amber-100 text-amber-800'
+                            }`}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </nav>
         </div>
 
@@ -239,6 +254,24 @@ export default function DataOperatorWebView({
       {/* Main Content Area */}
       <main className="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
+          {/* Active Kabaad Operations */}
+          {activeTab === 'groups' && (
+            <OperatorGroupsTab
+              wasteGroups={db.wasteGroups || []}
+              wasteCategories={db.wasteCategories || []}
+              masterItems={enrichedMasterItems}
+            />
+          )}
+
+          {activeTab === 'categories' && (
+            <OperatorCategoriesTab
+              wasteCategories={db.wasteCategories || []}
+              wasteGroups={db.wasteGroups || []}
+              masterItems={enrichedMasterItems}
+            />
+          )}
+
+          {/* Preserved Tabs for Later Versions (Nothing deleted from project) */}
           {activeTab === 'dashboard' && (
             <OperatorDashboardTab
               db={db}

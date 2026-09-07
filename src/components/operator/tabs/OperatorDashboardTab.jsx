@@ -34,6 +34,13 @@ export default function OperatorDashboardTab({
 
   return (
     <div className="space-y-6 pb-12 animate-fade-in">
+      {/* Informative banner: Links disabled per security/role requirements */}
+      <div className="flex items-center gap-2.5 rounded-2xl border border-stone-200 bg-stone-100/90 px-4 py-3 text-xs text-stone-600">
+        <span className="flex h-2 w-2 rounded-full bg-amber-500" />
+        <span className="font-semibold text-stone-700">Dashboard View Only:</span>
+        <span>Navigation links from dashboard are disabled. Use the enabled Kabaad tabs in the navigation bar.</span>
+      </div>
+
       {/* Top Action Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-stone-200/90 bg-white p-4 sm:p-5 shadow-xs">
         <div>
@@ -48,34 +55,35 @@ export default function OperatorDashboardTab({
         <div className="flex items-center gap-2 flex-wrap">
           <button
             type="button"
-            onClick={() => onNavigateTab('tickets', 'new-ticket')}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-primary-dark active:scale-95 transition"
+            disabled
+            className="flex items-center gap-1.5 rounded-xl bg-primary/40 px-3.5 py-2 text-xs font-bold text-white cursor-not-allowed transition"
+            title="Disabled"
           >
             <PlusCircle size={14} />
-            <span>New Pickup Ticket</span>
+            <span>New Pickup Ticket (Disabled)</span>
           </button>
 
           <button
             type="button"
-            onClick={() => onNavigateTab('purchase')}
-            className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2 text-xs font-bold text-ink hover:bg-stone-100 active:scale-95 transition"
+            disabled
+            className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-stone-100 px-3.5 py-2 text-xs font-bold text-stone-400 cursor-not-allowed transition"
+            title="Disabled"
           >
-            <ShoppingBag size={14} className="text-primary" />
-            <span>Purchase Kabaad</span>
+            <ShoppingBag size={14} className="text-stone-400" />
+            <span>Purchase Kabaad (Disabled)</span>
           </button>
         </div>
       </div>
 
-      {/* KPI Metric Cards */}
+      {/* KPI Metric Cards (Read-only / Non-clickable) */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 font-mono">
         {/* Card 1: Tickets */}
         <div
-          onClick={() => onNavigateTab('tickets', 'all')}
-          className="group cursor-pointer rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs hover:border-primary hover:shadow-sm transition"
+          className="rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs cursor-default"
         >
           <div className="flex items-center justify-between text-xs text-stone-500">
             <span className="font-sans font-bold">Pickup Tickets</span>
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-50 text-sky-700 group-hover:bg-primary group-hover:text-white transition">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-50 text-sky-700">
               <ClipboardList size={14} />
             </div>
           </div>
@@ -88,12 +96,11 @@ export default function OperatorDashboardTab({
 
         {/* Card 2: Kabaad Catalogue */}
         <div
-          onClick={() => onNavigateTab('catalogue')}
-          className="group cursor-pointer rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs hover:border-primary hover:shadow-sm transition"
+          className="rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs cursor-default"
         >
           <div className="flex items-center justify-between text-xs text-stone-500">
             <span className="font-sans font-bold">Kabaad Items</span>
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700 group-hover:bg-primary group-hover:text-white transition">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
               <Layers size={14} />
             </div>
           </div>
@@ -106,12 +113,11 @@ export default function OperatorDashboardTab({
 
         {/* Card 3: Waste Generators */}
         <div
-          onClick={() => onNavigateTab('generators')}
-          className="group cursor-pointer rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs hover:border-primary hover:shadow-sm transition"
+          className="rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs cursor-default"
         >
           <div className="flex items-center justify-between text-xs text-stone-500">
             <span className="font-sans font-bold">Waste Generators</span>
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700 group-hover:bg-primary group-hover:text-white transition">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700">
               <Users size={14} />
             </div>
           </div>
@@ -127,12 +133,11 @@ export default function OperatorDashboardTab({
 
         {/* Card 4: Pickup Slots */}
         <div
-          onClick={() => onNavigateTab('slots')}
-          className="group cursor-pointer rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs hover:border-primary hover:shadow-sm transition"
+          className="rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs cursor-default"
         >
           <div className="flex items-center justify-between text-xs text-stone-500">
             <span className="font-sans font-bold">Dispatch Slots</span>
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-50 text-amber-700 group-hover:bg-primary group-hover:text-white transition">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-50 text-amber-700">
               <CalendarDays size={14} />
             </div>
           </div>
@@ -152,14 +157,9 @@ export default function OperatorDashboardTab({
             <h2 className="font-heading text-sm font-bold text-ink">
               Recent Pickup Tickets
             </h2>
-            <button
-              type="button"
-              onClick={() => onNavigateTab('tickets', 'all')}
-              className="flex items-center gap-1 text-xs font-bold text-primary hover:underline"
-            >
-              <span>View All</span>
-              <ArrowRight size={13} />
-            </button>
+            <span className="text-xs font-mono text-stone-400">
+              Read-Only
+            </span>
           </div>
 
           <div className="divide-y divide-stone-100">
@@ -168,8 +168,7 @@ export default function OperatorDashboardTab({
               return (
                 <div
                   key={ticket.id}
-                  onClick={() => onNavigateTab('tickets', 'all')}
-                  className="flex items-center justify-between py-3 hover:bg-stone-50/70 px-2 rounded-xl transition cursor-pointer"
+                  className="flex items-center justify-between py-3 px-2 rounded-xl"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <span className="font-mono text-xs font-bold text-ink bg-stone-100 px-2 py-1 rounded border border-stone-200/60">
@@ -222,13 +221,9 @@ export default function OperatorDashboardTab({
               <h2 className="font-heading text-sm font-bold text-ink">
                 Material Groups
               </h2>
-              <button
-                type="button"
-                onClick={() => onNavigateTab('catalogue')}
-                className="text-xs font-bold text-primary hover:underline"
-              >
-                Catalog
-              </button>
+              <span className="text-xs font-mono text-stone-400">
+                Summary
+              </span>
             </div>
 
             <div className="space-y-2.5 font-mono text-xs">
@@ -239,8 +234,7 @@ export default function OperatorDashboardTab({
               ].map((grp) => (
                 <div
                   key={grp.name}
-                  onClick={() => onNavigateTab('catalogue')}
-                  className="flex items-center justify-between p-2.5 rounded-xl border border-stone-100 bg-stone-50/60 hover:bg-stone-100/80 transition cursor-pointer"
+                  className="flex items-center justify-between p-2.5 rounded-xl border border-stone-100 bg-stone-50/60"
                 >
                   <div className="flex items-center gap-2">
                     <WasteIcon token={grp.icon} size={15} className="text-primary" />

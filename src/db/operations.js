@@ -379,6 +379,130 @@ export function deleteGeneratorCategory(catId) {
   }));
 }
 
+/** Adds a new Kabaad Group (wasteGroup) */
+export function addWasteGroup({ id, name, icon = 'Boxes', swatch = 'kraft' }) {
+  let created = null;
+  commit((state) => {
+    const groups = state.wasteGroups || [];
+    const groupId = id?.trim() || nextId(groups, 'WG', 2);
+    created = {
+      id: groupId,
+      name: name.trim(),
+      icon: icon || 'Boxes',
+      swatch: swatch || 'kraft',
+    };
+    return {
+      ...state,
+      wasteGroups: [...groups, created],
+    };
+  });
+  return created;
+}
+
+/** Updates an existing Kabaad Group (wasteGroup) */
+export function updateWasteGroup(groupId, { name, icon, swatch }) {
+  commit((state) => {
+    const oldGroup = (state.wasteGroups || []).find((g) => g.id === groupId);
+    const oldName = oldGroup?.name;
+
+    const wasteGroups = (state.wasteGroups || []).map((g) =>
+      g.id === groupId
+        ? {
+            ...g,
+            name: name !== undefined ? name.trim() : g.name,
+            icon: icon !== undefined ? icon : g.icon,
+            swatch: swatch !== undefined ? swatch : g.swatch,
+          }
+        : g
+    );
+
+    // If name changed, update denormalized wasteGroup in masterItems
+    const newName = name !== undefined ? name.trim() : oldName;
+    const masterItems = (state.masterItems || []).map((item) => {
+      if (item.wasteGroup === oldName || item.groupId === groupId) {
+        return { ...item, wasteGroup: newName };
+      }
+      return item;
+    });
+
+    return {
+      ...state,
+      wasteGroups,
+      masterItems,
+    };
+  });
+}
+
+/** Deletes a Kabaad Group (wasteGroup) */
+export function deleteWasteGroup(groupId) {
+  commit((state) => ({
+    ...state,
+    wasteGroups: (state.wasteGroups || []).filter((g) => g.id !== groupId),
+  }));
+}
+
+/** Adds a new Kabaad Category (wasteCategory) */
+export function addWasteCategory({ id, groupId, name, icon = 'Layers' }) {
+  let created = null;
+  commit((state) => {
+    const categories = state.wasteCategories || [];
+    const catId = id?.trim() || nextId(categories, 'WC', 2);
+    created = {
+      id: catId,
+      groupId: groupId || (state.wasteGroups?.[0]?.id || 'WG-01'),
+      name: name.trim(),
+      icon: icon || 'Layers',
+    };
+    return {
+      ...state,
+      wasteCategories: [...categories, created],
+    };
+  });
+  return created;
+}
+
+/** Updates an existing Kabaad Category (wasteCategory) */
+export function updateWasteCategory(categoryId, { groupId, name, icon }) {
+  commit((state) => {
+    const oldCat = (state.wasteCategories || []).find((c) => c.id === categoryId);
+    const oldName = oldCat?.name;
+
+    const wasteCategories = (state.wasteCategories || []).map((c) =>
+      c.id === categoryId
+        ? {
+            ...c,
+            groupId: groupId !== undefined ? groupId : c.groupId,
+            name: name !== undefined ? name.trim() : c.name,
+            icon: icon !== undefined ? icon : c.icon,
+          }
+        : c
+    );
+
+    // If name changed, update denormalized wasteCategory in masterItems
+    const newName = name !== undefined ? name.trim() : oldName;
+    const masterItems = (state.masterItems || []).map((item) => {
+      if (item.categoryId === categoryId || item.wasteCategory === oldName) {
+        return { ...item, wasteCategory: newName };
+      }
+      return item;
+    });
+
+    return {
+      ...state,
+      wasteCategories,
+      masterItems,
+    };
+  });
+}
+
+/** Deletes a Kabaad Category (wasteCategory) */
+export function deleteWasteCategory(categoryId) {
+  commit((state) => ({
+    ...state,
+    wasteCategories: (state.wasteCategories || []).filter((c) => c.id !== categoryId),
+  }));
+}
+
 export function resetPartnerDb() {
   resetToSeed();
 }

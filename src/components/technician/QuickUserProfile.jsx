@@ -29,21 +29,26 @@ export default function QuickUserProfile({
 }) {
   const generator = ticket?.generator || {};
   const [selectedSlotId, setSelectedSlotId] = useState(
-    ticket?.slotId || ticket?.slot?.id || slots[0]?.id || 'SLOT-01'
+    ticket?.slotId || ticket?.slot?.id || null
   );
   const [isChangingSlot, setIsChangingSlot] = useState(false);
   const [slotChangeNotice, setSlotChangeNotice] = useState('');
 
   const currentSlot =
-    slots.find((s) => s.id === selectedSlotId) ||
-    ticket?.slot ||
-    slots[0] || {
-      id: 'SLOT-01',
-      day: 'Today',
-      timeRange: '8:00 AM - 11:00 AM',
-    };
+    (selectedSlotId ? slots.find((s) => s.id === selectedSlotId) : null) ||
+    (ticket?.slotId ? (slots.find((s) => s.id === ticket.slotId) || ticket?.slot) : null) ||
+    null;
 
   const handleSelectNewSlot = (slot) => {
+    if (!slot) {
+      setSelectedSlotId(null);
+      if (onUpdateSlot && ticket?.id) {
+        onUpdateSlot(ticket.id, null);
+      }
+      setSlotChangeNotice('Pickup slot cleared (No Slots)');
+      setIsChangingSlot(false);
+      return;
+    }
     setSelectedSlotId(slot.id);
     if (onUpdateSlot && ticket?.id) {
       onUpdateSlot(ticket.id, slot.id);
@@ -145,32 +150,49 @@ export default function QuickUserProfile({
             className="flex items-center gap-1.5 rounded-xl bg-[#2C5F74] hover:bg-[#234d5e] px-3 py-1.5 text-xs font-bold text-white shadow-xs transition active:scale-95"
           >
             <CalendarClock size={13} />
-            <span>Schedule Slot</span>
+            <span>{currentSlot ? 'Change Slot' : 'Schedule Slot'}</span>
           </button>
         </div>
 
-        {/* Current Active Slot Display - ONLY date and time (no morning/afternoon/evening) */}
-        <div className="rounded-xl border border-sky-200/70 bg-sky-50/50 p-3 flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="font-heading text-xs font-bold text-sky-950">
-              {currentSlot.day}
-              {currentSlot.formattedDate || currentSlot.date
-                ? `, ${currentSlot.formattedDate || currentSlot.date}`
-                : ''}
-            </p>
-            <p className="flex items-center gap-1.5 font-mono text-xs text-[#2C5F74] font-bold">
-              <Clock size={12} />
-              <span>{currentSlot.timeRange || currentSlot.timeWindow || '8:00 AM - 11:00 AM'}</span>
-            </p>
-          </div>
+        {/* Current Active Slot Display OR No Slots Display */}
+        {currentSlot ? (
+          <div className="rounded-xl border border-sky-200/70 bg-sky-50/50 p-3 flex items-center justify-between">
+            <div className="space-y-1">
+              <p className="font-heading text-xs font-bold text-sky-950">
+                {currentSlot.day}
+                {currentSlot.formattedDate || currentSlot.date
+                  ? `, ${currentSlot.formattedDate || currentSlot.date}`
+                  : ''}
+              </p>
+              <p className="flex items-center gap-1.5 font-mono text-xs text-[#2C5F74] font-bold">
+                <Clock size={12} />
+                <span>{currentSlot.timeRange || currentSlot.timeWindow || '8:00 AM - 11:00 AM'}</span>
+              </p>
+            </div>
 
-          {ticket?.estimatedWeight && (
-            <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-amber-900 bg-amber-100/70 px-2 py-0.5 rounded-md">
-              <Scale size={11} />
-              <span>~{ticket.estimatedWeight} kg</span>
+            {ticket?.estimatedWeight && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-amber-900 bg-amber-100/70 px-2 py-0.5 rounded-md">
+                <Scale size={11} />
+                <span>~{ticket.estimatedWeight} kg</span>
+              </span>
+            )}
+          </div>
+        ) : (
+          <div className="rounded-xl border border-dashed border-stone-300 bg-stone-50/80 p-3 flex items-center justify-between">
+            <div className="space-y-0.5">
+              <p className="font-heading text-xs font-bold text-stone-700 flex items-center gap-1.5">
+                <CalendarClock size={14} className="text-stone-400" />
+                <span>No Slots</span>
+              </p>
+              <p className="font-mono text-[11px] text-stone-500">
+                No pickup slot selected for this generator
+              </p>
+            </div>
+            <span className="font-mono text-[10px] font-bold text-amber-800 bg-amber-100/80 px-2 py-0.5 rounded-md">
+              Unscheduled
             </span>
-          )}
-        </div>
+          </div>
+        )}
 
         {slotChangeNotice && (
           <p className="font-mono text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded-lg">
@@ -218,6 +240,36 @@ export default function QuickUserProfile({
             </p>
 
             <div className="space-y-2 max-h-64 overflow-y-auto pr-0.5">
+              {/* Option to clear / keep unscheduled */}
+              <button
+                type="button"
+                onClick={() => handleSelectNewSlot(null)}
+                className={`w-full text-left rounded-xl p-3 border transition-all flex items-center justify-between ${
+                  !selectedSlotId
+                    ? 'border-[#2C5F74] bg-sky-50/70 shadow-xs'
+                    : 'border-stone-200 bg-stone-50/60 hover:bg-white hover:border-stone-300'
+                }`}
+              >
+                <div>
+                  <span className="font-heading text-xs font-bold text-stone-700">
+                    No Slots (Unscheduled)
+                  </span>
+                  <p className="mt-0.5 font-mono text-[10px] text-stone-400">
+                    Do not assign any pickup time window
+                  </p>
+                </div>
+
+                <div
+                  className={`flex h-5 w-5 items-center justify-center rounded-full border ${
+                    !selectedSlotId
+                      ? 'border-[#2C5F74] bg-[#2C5F74] text-white'
+                      : 'border-stone-300 bg-white'
+                  }`}
+                >
+                  {!selectedSlotId && <Check size={12} strokeWidth={3} />}
+                </div>
+              </button>
+
               {slots.map((slot) => {
                 const isSelected = selectedSlotId === slot.id;
                 const isAvailable = (slot.status || '').toLowerCase() !== 'full';

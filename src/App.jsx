@@ -38,8 +38,8 @@ export default function App() {
   });
 
   // Technician navigation states
-  // Bottom Nav tabs: 'dashboard' | 'generator' | 'menu'
-  const [techTopTab, setTechTopTab] = useState('dashboard');
+  // Bottom Nav tabs: 'generator' (landing screen) | 'menu' (Dashboard preserved for future release)
+  const [techTopTab, setTechTopTab] = useState('generator');
   const [isWalkInIntake, setIsWalkInIntake] = useState(false);
 
   // Quick User Profile state when a user card is clicked
@@ -55,7 +55,7 @@ export default function App() {
     category: 'family',
     phone: '',
     address: '',
-    selectedSlotId: 'SLOT-01',
+    selectedSlotId: null,
     ticketId: null,
   });
   const [dispatchedBooking, setDispatchedBooking] = useState(null);
@@ -68,7 +68,7 @@ export default function App() {
 
   const punchIn = (staffId) => {
     setCurrentStaffId(staffId);
-    setTechTopTab('dashboard');
+    setTechTopTab('generator');
     setFlow2Step('desk');
     setPurchaseTarget(null);
     setSelectedTicketForProfile(null);
@@ -83,7 +83,7 @@ export default function App() {
     setPurchaseTarget(null);
     setSelectedTicketForProfile(null);
     setReceipt(null);
-    setTechTopTab('dashboard');
+    setTechTopTab('generator');
     setFlow2Step('desk');
     setIsWalkInIntake(false);
     try {
@@ -159,7 +159,7 @@ export default function App() {
       category: 'family',
       phone: '',
       address: '',
-      selectedSlotId: enrichedSlots[0]?.id || 'SLOT-01',
+      selectedSlotId: null,
       ticketId: null,
     });
     setDispatchedBooking(null);
@@ -209,8 +209,8 @@ export default function App() {
       id: `TKT-2026-${String(generator.id || '0001').replace(/\D/g, '').padStart(4, '0')}`,
       generatorId: generator.id,
       generator,
-      slotId: enrichedSlots[0]?.id || 'SLOT-01',
-      slot: enrichedSlots[0],
+      slotId: null, // No slot preselected
+      slot: null,
       estimatedWeight: null,
       notes: '',
     };
@@ -221,7 +221,7 @@ export default function App() {
     updateTicketSlot(ticketId, slotId);
     setSelectedTicketForProfile((prev) => {
       if (prev && prev.id === ticketId) {
-        const slot = enrichedSlots.find((s) => s.id === slotId) || prev.slot;
+        const slot = slotId ? (enrichedSlots.find((s) => s.id === slotId) || null) : null;
         return { ...prev, slotId, slot };
       }
       return prev;
@@ -237,7 +237,7 @@ export default function App() {
       category: generator.category || 'family',
       phone: generator.phone || '',
       address: generator.address || '',
-      selectedSlotId: currentSlot?.id || ticket.slotId || 'SLOT-01',
+      selectedSlotId: currentSlot?.id || ticket.slotId || null,
       slotDay: currentSlot?.day,
       slotTime: currentSlot?.timeRange,
       timeRange: currentSlot?.timeRange,
@@ -285,7 +285,7 @@ export default function App() {
     setReceipt(null);
     setIsWalkInIntake(false);
     setSelectedTicketForProfile(null);
-    setTechTopTab('dashboard');
+    setTechTopTab('generator');
   };
 
   // =========================================================================
@@ -338,16 +338,16 @@ export default function App() {
           setSelectedTicketForProfile(null);
         } else if (isWalkInIntake) {
           setIsWalkInIntake(false);
-          setTechTopTab('dashboard');
+          setTechTopTab('generator');
         } else if (techTopTab === 'menu') {
-          setTechTopTab('dashboard');
+          setTechTopTab('generator');
         } else if (techTopTab === 'generator') {
           if (flow2Step === 'itemEntry') {
             if (staffEntry.ticketId) {
               const ticket = technicianTickets.find((t) => t.id === staffEntry.ticketId);
               if (ticket) setSelectedTicketForProfile(ticket);
               else setSelectedTicketForProfile(null);
-              setTechTopTab('dashboard');
+              setTechTopTab('generator');
             } else {
               setFlow2Step('desk');
             }
@@ -355,9 +355,9 @@ export default function App() {
             setFlow2Step('itemEntry');
           } else if (flow2Step === 'success') {
             handleResetFlow2();
-            setTechTopTab('dashboard');
+            setTechTopTab('generator');
           } else {
-            setTechTopTab('dashboard');
+            setTechTopTab('generator');
           }
         }
       }}
@@ -374,7 +374,7 @@ export default function App() {
           setIsWalkInIntake(false);
           setPurchaseTarget(null);
         } else {
-          // dashboard
+          // dashboard or other
           setIsWalkInIntake(false);
           setPurchaseTarget(null);
         }
@@ -473,7 +473,7 @@ export default function App() {
               }}
               onGoHome={() => {
                 handleResetFlow2();
-                setTechTopTab('dashboard');
+                setTechTopTab('generator');
               }}
             />
           )}
